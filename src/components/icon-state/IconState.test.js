@@ -3,7 +3,7 @@ import IconState from "./IconState";
 import { render, screen } from "@testing-library/react";
 
 test("IconState rendering", async () => {
-  const mockState = 'cloudy';
+  const mockState = 'rain';
 
   render(<IconState state={mockState} />);
 

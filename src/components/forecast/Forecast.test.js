@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 test("Forecast rendering", async () => {
     const mock = [
         { weekDay: "Lunes", hour: 12, state: "cloud", temperature: 24 },
-        { weekDay: "Martes", hour: 12, state: "cloudy", temperature: 20 },
+        { weekDay: "Martes", hour: 12, state: "cloud", temperature: 20 },
     ];
 
     render(

@@ -1,26 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-    WiCloud,
-    WiDayCloudy,
-    WiDayFog,
-    WiDaySunny,
+    WiThunderstorm,
+    WiShowers,
     WiRain,
+    WiSnow,
+    WiFog,
+    WiDaySunny,
+    WiCloudy,
     WiNa,
 } from "react-icons/wi";
 import { IconContext } from "react-icons";
 
 export const states = {
-    cloud: WiCloud,
-    cloudy: WiDayCloudy,
-    fog: WiDayFog,
-    sunny: WiDaySunny,
+    thunderstorm: WiThunderstorm,
+    drizzle: WiShowers,
     rain: WiRain,
+    snow: WiSnow,
+    atmosphere: WiFog,
+    clear: WiDaySunny,
+    cloud: WiCloudy,
 };
 
 const renderState = (state) => {
     const Icon = states[state];
-    if (Icon) return <Icon data-testid='dt-icon-state' name={`${state}-icon`}/>;
+    if (Icon)
+        return <Icon data-testid="dt-icon-state" name={`${state}-icon`} />;
     return <WiNa />;
 };
 

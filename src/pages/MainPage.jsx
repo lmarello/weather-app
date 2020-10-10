@@ -6,10 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
 const mockCities = [
-    { city: "Buenos Aires", country: "Argentina" },
-    { city: "San Pablo", country: "Brasil" },
-    { city: "Cartagena", country: "Colombia" },
-    { city: "Madrid", country: "España" },
+    { city: "Buenos Aires", country: "Argentina", countryCode:'AR' },
+    { city: "Cartagena", country: "Colombia", countryCode:'CO' },
+    { city: "Madrid", country: "España", countryCode:'ES' },
+    { city: "Tokio", country: "Japón", countryCode:'JP' },
+    { city: "Nunavut", country: "Canadá", countryCode:'CA' },
 ];
 
 const MainPage = () => {
@@ -19,7 +20,7 @@ const MainPage = () => {
     };
 
     return (
-        <Grid container xs={12}>
+        <Grid container>
             <AppFrame>
                 <h2>Ciudades</h2>
                 <Paper elevation={3}>

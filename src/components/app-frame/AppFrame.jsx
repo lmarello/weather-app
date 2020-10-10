@@ -12,7 +12,7 @@ import { IconContext } from "react-icons";
 
 const AppFrame = ({ children }) => {
     return (
-        <Grid container justify="center" alignItems="center" xs={12}>
+        <Grid container justify="center" alignItems="center" item xs={12}>
             <AppBar position="static">
                 <Toolbar variant="dense">
                     <IconButton color="inherit" aria-label="menu">
