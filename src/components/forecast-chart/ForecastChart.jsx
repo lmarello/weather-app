@@ -19,7 +19,7 @@ const ForecastChart = ({ data }) => {
                 data={data}
             >
                 <CartesianGrid />
-                <XAxis dataKey="dayHour" />
+                <XAxis dataKey="weekday" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
@@ -33,7 +33,7 @@ const ForecastChart = ({ data }) => {
 ForecastChart.propTypes = {
     data: PropTypes.arrayOf(
         PropTypes.shape({
-            dayHour: PropTypes.string.isRequired,
+            weekday: PropTypes.string.isRequired, // TODO: OneOf
             min: PropTypes.number.isRequired,
             max: PropTypes.number.isRequired,
         })

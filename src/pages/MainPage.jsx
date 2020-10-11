@@ -6,17 +6,17 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
 const mockCities = [
-    { city: "Buenos Aires", country: "Argentina", countryCode:'AR' },
-    { city: "Cartagena", country: "Colombia", countryCode:'CO' },
-    { city: "Madrid", country: "España", countryCode:'ES' },
-    { city: "Tokio", country: "Japón", countryCode:'JP' },
-    { city: "Nunavut", country: "Canadá", countryCode:'CA' },
+    { city: "Buenos Aires", country: "Argentina", countryCode: "AR" },
+    { city: "Cartagena", country: "Colombia", countryCode: "CO" },
+    { city: "Madrid", country: "España", countryCode: "ES" },
+    { city: "Tokio", country: "Japón", countryCode: "JP" },
+    { city: "Nunavut", country: "Canadá", countryCode: "CA" },
 ];
 
 const MainPage = () => {
     const history = useHistory();
-    const handleOnClick = () => {
-        history.push("/city");
+    const handleOnClick = (city, countryCode) => {
+        history.push(`/city/${countryCode}/${city}`);
     };
 
     return (

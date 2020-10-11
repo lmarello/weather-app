@@ -7,7 +7,7 @@ import { IconContext } from "react-icons";
 
 const WeatherDetails = ({ humidity, wind }) => {
     return (
-        <Grid item justify='center'>
+        <Grid>
             <Grid container>
                 <IconContext.Provider value={{ size: "1.5em" }}>
                     <WiHumidity />

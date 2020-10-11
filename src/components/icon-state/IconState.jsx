@@ -20,6 +20,8 @@ export const states = {
     atmosphere: WiFog,
     clear: WiDaySunny,
     cloud: WiCloudy,
+    clouds: WiCloudy,
+    na: WiNa
 };
 
 const renderState = (state) => {
