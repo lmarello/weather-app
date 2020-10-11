@@ -31,23 +31,37 @@ const renderCity = (onClickCity) => (cityInfo, weather) => {
 
 const CityList = ({ cities, onClickCity }) => {
     const [weatherInfo, setWeatherInfo] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const keys = Object.keys(weatherInfo);
-
-        if (keys.length === 0 || cities.length !== keys.length)
-            getWeather(cities).then((data) => {
-                const results = {};
-
-                data.forEach((x) => {
-                    results[x.cityKey] = { ...x };
-                });                
-
+        const setWeather = async (city, countryCode, cityKey) => {
+            try {
+                const response = await getWeather(city, countryCode, cityKey);
                 setWeatherInfo((weatherInfo) => ({
                     ...weatherInfo,
-                    ...results,
+                    [cityKey]: response,
                 }));
-            });
+            } catch (error) {
+                setError(error.message);
+                console.log(error.message);
+                setWeatherInfo((weatherInfo) => ({
+                    ...weatherInfo,
+                    [cityKey]: { temperature: null, state: ''},
+                }));
+            }
+        };
+
+        const weatherInfoKeys = Object.keys(weatherInfo);
+
+        cities.forEach(({ city, countryCode }) => {
+            const cityKey = `${city}_${countryCode}`;
+            if (
+                weatherInfoKeys.length === 0 ||
+                !weatherInfo.hasOwnProperty(cityKey)
+            ) {
+                setWeather(city, countryCode, cityKey);
+            }
+        });
     }, [cities, weatherInfo]);
 
     return (

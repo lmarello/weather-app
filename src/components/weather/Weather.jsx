@@ -13,14 +13,14 @@ function Weather({ temperature, state }) {
                 variant="h5"
                 data-testid="dt-weather-tempertature"
             >
-                {temperature} °C
+                {temperature ? `${temperature} °C` : ''}
             </Typography>
         </Grid>
     );
 }
 
 Weather.propTypes = {
-    temperature: PropTypes.number.isRequired,
+    temperature: PropTypes.number,
     state: PropTypes.oneOf(validStates).isRequired,
 };
 
