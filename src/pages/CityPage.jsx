@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useCityPage } from "../hooks/use-city-page";
 import Grid from "@material-ui/core/Grid";
-import { weatherApi } from "../services/weather-api";
 import CityInfo from "../components/city-info";
 import Weather from "../components/weather";
 import WeatherDetails from "../components/weather-details";
@@ -10,37 +10,12 @@ import Forecast from "../components/forecast";
 import AppFrame from "../components/app-frame";
 
 const CityPage = () => {
-    const history = useHistory();
+    const history = useHistory();    
+    const [city, chartData, forecastItems] = useCityPage();
+
     const handleOnClick = () => {
         history.push("/main");
     };
-
-    const [data, setData] = useState([]);
-    const [forecastItems, setForecastItems] = useState([]);
-    const { city, countryCode } = useParams();
-
-    useEffect(() => {
-        const getForecast = async () => {
-            try {
-                const response = await weatherApi.getForecast(
-                    city,
-                    countryCode
-                );
-
-                debugger
-                
-                setData(response.data);
-                setForecastItems(response.forecast);
-                
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getForecast();
-
-
-    }, [city, countryCode]);
 
     const country = "Argentina";
     const state = "rain";
@@ -64,7 +39,7 @@ const CityPage = () => {
                         <WeatherDetails humidity={humidity} wind={wind} />
                     </Grid>
                     <Grid item xs={12}>
-                        <ForecastChart data={data} />
+                        <ForecastChart data={chartData} />
                     </Grid>
                     <Grid container item xs={12} spacing={2}>
                         <Forecast forecastItems={forecastItems} />

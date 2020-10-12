@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { weatherApi } from "../services/weather-api";
 import { getCityKey } from "../utils";
 
-const useCityList = (cities) => {
+export const useCityList = (cities) => {
     const [weatherInfo, setWeatherInfo] = useState({});
     const [error, setError] = useState(null);
 
@@ -42,5 +42,3 @@ const useCityList = (cities) => {
 
     return [weatherInfo];
 };
-
-export default useCityList;

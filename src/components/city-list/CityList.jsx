@@ -5,7 +5,7 @@ import Weather from "../weather";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import useCityList from "../../hooks/use-city-list";
+import { useCityList } from "../../hooks/use-city-list";
 import { getCityKey } from "../../utils";
 
 const renderCity = (onClickCity) => (cityInfo, weather) => {
