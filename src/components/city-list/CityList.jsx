@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import CityInfo from "../city-info";
 import Weather from "../weather";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import { weatherApi } from "../../services/weather-api";
-
-const getCityKey = (city, countryCode) => `${city}_${countryCode}`;
+import useCityList from "../../hooks/use-city-list";
+import { getCityKey } from "../../utils";
 
 const renderCity = (onClickCity) => (cityInfo, weather) => {
     const { city, country, countryCode } = cityInfo;
 
     return (
-        <ListItem button key={city} onClick={()=> onClickCity(city, countryCode)}>
+        <ListItem
+            button
+            key={city}
+            onClick={() => onClickCity(city, countryCode)}
+        >
             <Grid container justify="center" alignItems="center">
                 <Grid item md={8} sm={9} xs={12}>
                     <CityInfo city={city} country={country} />
@@ -32,47 +35,15 @@ const renderCity = (onClickCity) => (cityInfo, weather) => {
 };
 
 const CityList = ({ cities, onClickCity }) => {
-    const [weatherInfo, setWeatherInfo] = useState({});
-    const [error, setError] = useState(null); // eslint-disable-line
-
-    useEffect(() => {
-        const setWeather = async (city, countryCode, cityKey) => {
-            try {
-                const response = await weatherApi.getWeather(city, countryCode, cityKey);
-                setWeatherInfo((weatherInfo) => ({
-                    ...weatherInfo,
-                    [cityKey]: response,
-                }));
-            } catch (error) {
-                setError(error.message);
-                setWeatherInfo((weatherInfo) => ({
-                    ...weatherInfo,
-                    [cityKey]: { temperature: null, state: "na" },
-                }));
-            }
-        };
-
-        const weatherInfoKeys = Object.keys(weatherInfo);
-
-        cities.forEach(({ city, countryCode }) => {
-            const cityKey = getCityKey(city, countryCode);
-            if (
-                weatherInfoKeys.length === 0 ||
-                !weatherInfo.hasOwnProperty(cityKey)
-            ) {
-                setWeather(city, countryCode, cityKey);
-            }
-        });
-    }, [cities, weatherInfo]);
+    const [weatherInfo] = useCityList(cities);
 
     return (
         <List>
-            {cities.map((cityInfo) =>
-                renderCity(onClickCity)(
-                    cityInfo,
-                    weatherInfo[`${cityInfo.city}_${cityInfo.countryCode}`]
-                )
-            )}
+            {cities.map((cityInfo) => {
+                const { city, countryCode } = cityInfo;
+                const cityKey = getCityKey(city, countryCode);
+                return renderCity(onClickCity)(cityInfo, weatherInfo[cityKey]);
+            })}
         </List>
     );
 };
