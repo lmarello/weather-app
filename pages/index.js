@@ -1,115 +1,69 @@
-import Image from "next/image";
+import { useState, useEffect } from "react";
+import { getForecast } from "../services/weatherApi";
+import WeatherIcon from "../components/WeatherIcon";
+
+const BS_AS_CITY_ID = 468739;
 
 export default function Home() {
+  const [data, setData] = useState(null);
+  const [cityId, setCityId] = useState(BS_AS_CITY_ID);
+
+  useEffect(() => {
+    async function fetchForecast() {
+      const response = await getForecast(cityId);
+      setData(response);
+    }
+    fetchForecast();
+  }, [cityId]);
+
+  if (!data) return <div>NO DATA </div>;
+
+  const {
+    currentTemp,
+    status,
+    minTemp,
+    maxTemp,
+    humidity,
+    windSpeed,
+    airPressure,
+    city,
+    country,
+    date,
+    weekForecast,
+  } = data;
+
   return (
-    <>
-      <div className="w-full grid place-content-center my-10 ">
-        <h1 className="text-4xl text-gray-700">Weather App</h1>
-      </div>
-      <div className="mx-auto grid grid-cols-[30%_70%] max-w-4xl h-[500px] rounded-[40px] overflow-hidden shadow-lg text-gray-600">
-        <div className="bg-white p-10">
-          <div>Barra de busqueda</div>
-          <div className="grid content-center mt-10">
-            <h1 className="text-md font-semibold">Buenos Aires, Argentina</h1>
-            <h2 className="text-sm mb-10">
-              <span className="font-semibold">Monday</span>
-              <span className="text-gray-400">, 16:00</span>
-            </h2>
-            <Image
-              width={120}
-              height={120}
-              src="/images/forecast/showers.svg"
-              alt="clima"
-            />
-            <h1 className="mt-10 text-5xl text-center">12°C</h1>
-            <h1 className="mt-1 text-lg text-center">Mostly Cloud</h1>
+    <div className="grid h-screen">
+      <div className="w-full grid place-content-center">
+        <div className="bg-glass text-white h-[600px] w-[400px] text-center py-10 px-2">
+          <span>{date}</span>
+          <h1 className="text-2xl font-semibold">{`${city}, ${country}`}</h1>
+          <div className="my-8 opacity-[0.8]">
+            <WeatherIcon size={90} status={status} />
           </div>
-        </div>
-        <div className="bg-gray-100 p-10">
-          <div className="flex gap-4">
-            <div className="bg-white w-[100px] p-3 rounded-lg grid justify-items-center">
-              <h1 className="font-semibold mb-2">Sun</h1>
-              <Image
-                width={40}
-                height={40}
-                src="/images/forecast/sunny.svg"
-                alt="clima"
-              />
+          <h1 className="text-2xl">{status}</h1>
+          <h1 className="text-6xl">{currentTemp}°C</h1>
+          <h1 className="text-xs mt-2">{`MIN.: ${minTemp}°C - MAX.: ${maxTemp}°C`}</h1>
+          <div className="bg-glass-card text-white h-[150px] w-[300px] text-left mx-auto mt-10 p-4">
+            {weekForecast.map((forecast) => {
+              const { status, minTemp, maxTemp, weekDay } = forecast;
 
-              <p className="text-xs mt-2">
-                <span className="font-semibold ">MAX. 21°C</span>
-              </p>
-              <p className="text-xs">
-                <span className="text-gray-400">MIN. 12°C</span>
-              </p>
-            </div>
-            <div className="bg-white w-[100px] p-3 rounded-lg grid justify-items-center">
-              <h1 className="font-semibold mb-2">Sun</h1>
-              <Image
-                width={40}
-                height={40}
-                src="/images/forecast/sunny.svg"
-                alt="clima"
-              />
-
-              <p className="text-xs mt-2">
-                <span className="font-semibold ">MAX. 21°C</span>
-              </p>
-              <p className="text-xs">
-                <span className="text-gray-400">MIN. 12°C</span>
-              </p>
-            </div>
-            <div className="bg-white w-[100px] p-3 rounded-lg grid justify-items-center">
-              <h1 className="font-semibold mb-2">Sun</h1>
-              <Image
-                width={40}
-                height={40}
-                src="/images/forecast/sunny.svg"
-                alt="clima"
-              />
-
-              <p className="text-xs mt-2">
-                <span className="font-semibold ">MAX. 21°C</span>
-              </p>
-              <p className="text-xs">
-                <span className="text-gray-400">MIN. 12°C</span>
-              </p>
-            </div>
-            <div className="bg-white w-[100px] p-3 rounded-lg grid justify-items-center">
-              <h1 className="font-semibold mb-2">Sun</h1>
-              <Image
-                width={40}
-                height={40}
-                src="/images/forecast/sunny.svg"
-                alt="clima"
-              />
-
-              <p className="text-xs mt-2">
-                <span className="font-semibold ">MAX. 21°C</span>
-              </p>
-              <p className="text-xs">
-                <span className="text-gray-400">MIN. 12°C</span>
-              </p>
-            </div>
-            <div className="bg-white w-[100px] p-3 rounded-lg grid justify-items-center">
-              <h1 className="font-semibold mb-2">Sun</h1>
-              <Image
-                width={40}
-                height={40}
-                src="/images/forecast/sunny.svg"
-                alt="clima"
-              />
-
-              <p className="text-xs mt-2">
-                <span className="font-semibold ">MAX. 21°C</span>
-              </p>
-              <p className="text-xs">
-                <span className="text-gray-400">MIN. 12°C</span>
-              </p>
-            </div>
+              return (
+                <div
+                  key={weekDay}
+                  className="flex justify-between text-sm py-[2px] text-gray-400"
+                >
+                  <div className="w-[10px]">{weekDay}</div>
+                  <div className="w-[20px] text-center">
+                    <WeatherIcon size={12} status={status} />
+                  </div>
+                  <div>{`min.: ${minTemp}°C - max.: ${maxTemp}°C`}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
