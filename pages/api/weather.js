@@ -22,9 +22,6 @@ export default async function getForecast(req, res) {
       min_temp: minTemp,
       max_temp: maxTemp,
       the_temp: currentTemp,
-      wind_speed: windSpeed,
-      humidity: humidity,
-      air_pressure: airPressure,
     } = consolidatedWeather[0];
 
     const todayForecast = {
@@ -32,9 +29,6 @@ export default async function getForecast(req, res) {
       minTemp: minTemp.toFixed(),
       maxTemp: maxTemp.toFixed(),
       currentTemp: currentTemp.toFixed(),
-      windSpeed,
-      humidity,
-      airPressure,
     };
 
     const weekForecast = [];
