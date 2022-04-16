@@ -23,3 +23,11 @@ body {
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+@media (max-width: 500px) {
+  .bg-glass{
+    padding-left: 25px;
+    padding-right: 25px;
+    width: 350px;
+  }
+}
