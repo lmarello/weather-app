@@ -3,6 +3,7 @@ import { getForecast } from "../services/weatherApi";
 import WeekForecast from "../components/WeekForecast";
 import CurrentWeather from "../components/CurrentWeather";
 import ContentLayout from "../components/ContentLayout";
+import Loading from "../components/Loading";
 
 const BS_AS_CITY_ID = 468739;
 
@@ -21,7 +22,7 @@ export default function Home() {
   if (!data)
     return (
       <ContentLayout>
-        <div>LOADING...</div>
+        <Loading />
       </ContentLayout>
     );
 
