@@ -12,4 +12,13 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Live example on https://weather-app-drab-phi.vercel.app/
+-----------
+
+### Todo list:
+- ✅ Clima actual y pronostico semanal ciudad por defecto
+- ⬜ Buscador de ciudades
+- ⬜ Implementacion Typescript
+
+-----------
+
+#### Live example on https://weather-app-drab-phi.vercel.app/
